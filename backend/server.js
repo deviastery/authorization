@@ -72,9 +72,34 @@ app.post("/api/users/login", async(req, res) => {
 
   const clients = await Client.find({ FIO_employee: FIO });
 
-  console.log(clients);
-  
   res.status(200).send(clients);
+});
+
+app.post("/api/clients/:account_number/updateStatus", async (req, res) => {
+  console.log(req.body);
+  const { status } = req.body;
+  const account_number = req.params["account_number"];
+
+  console.log(account_number);
+
+  try {
+    const client = await Client.findOne({ account_number });
+
+    if (!client) {
+      return res.status(404).json({ error: 'Пользователь не найден' });
+    }
+
+    client.status = status;
+
+    await client.save();
+
+    console.log('Статус клиента успешно обновлен:', client);
+
+    res.status(200).send(client);
+  } catch (error) {
+    console.error('Ошибка при обновлении статуса клиента:', error);
+    res.status(500).json({ error: 'Ошибка при обновлении статуса клиента' });
+  }
 });
 
 process.on("SIGINT", async() => {
