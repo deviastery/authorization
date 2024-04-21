@@ -9,7 +9,7 @@ const App: React.FC = () => {
   const [clients, setClients] = useState<IClient[]>([]);
 
   return (
-    <div className="App">
+    <>
       <BrowserRouter>
         <Routes>
             <Route 
@@ -18,11 +18,11 @@ const App: React.FC = () => {
             />
             <Route 
                 path="/clients"
-                element={<ClientsPage clients={clients}/>}
+                element={<ClientsPage clients={clients} setClients={setClients}/>}
             />
           </Routes>
           </BrowserRouter>
-    </div>
+    </>
   );
 }
 

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IClient } from '../../types/data';
 
+import styles from './AuthorizationPage.module.css';
+
 const AuthorizationPage: React.FC<{ setClients: 
                         (clients: IClient[]) => void }> = 
                         ({ setClients }: { setClients: 
@@ -13,15 +15,13 @@ const AuthorizationPage: React.FC<{ setClients:
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     
         const data = {
           login,
           password
         };
-    
-        console.log(JSON.stringify(data));
 
           fetch('http://localhost:3001/api/users/login', {
             method: 'POST',
@@ -51,23 +51,25 @@ const AuthorizationPage: React.FC<{ setClients:
 
     return (
         <>
-            {errorMessage && <div>{errorMessage}</div>} 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="">login</label>
+            {errorMessage && <div className={styles.form_error}>{errorMessage}</div>} 
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <label className={styles.form__label}>login</label>
                 <input 
+                    className={styles.form__input}
                     type="text" 
                     value={login} 
                     placeholder='login' 
                     onChange={(e) => setLogin(e.target.value)}
                 />
-                <label htmlFor="">password</label>
+                <label className={styles.form__label}>password</label>
                 <input 
-                    type="text" 
+                    className={styles.form__input}
+                    type="password" 
                     value={password} 
                     placeholder='password' 
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type='submit'>Log in</button>
+                <button type='submit' className={styles.form__btn}>Log in</button>
             </form>
         </>
     )

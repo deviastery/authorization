@@ -1,0 +1,31 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 300px;
+    margin: 70px auto;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #b3c9dd;
+    padding: 80px 10px;
+    box-sizing: border-box;
+}
+.form__label{
+    margin: 7px auto;
+}
+.form__input{
+
+}
+.form_error{
+    color: #9d0000;
+    margin: 10px auto;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.form__btn{
+    margin-top: 50px;
+    line-height: 30px;
+    background-color: #5c9d63;
+    font-size: 15px;
+}

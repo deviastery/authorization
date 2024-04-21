@@ -3,7 +3,6 @@ const cors = require("cors");
 const express = require("express");
 const Schema = mongoose.Schema;
 const app = express();
-const MongoClient = require("mongodb").MongoClient;
 
 const corsOptions = {
     origin: '*',
@@ -11,7 +10,6 @@ const corsOptions = {
   }
 
 app.use(cors());
-
 app.use(express.json());
 
 const clientSchema = new Schema({
@@ -35,19 +33,12 @@ const userSchema = new Schema({
 
 const User = mongoose.model("User", userSchema);
 
-const url = "mongodb://127.0.0.1:27017/";
-const mongoClient = new MongoClient(url);
-
 (async () => {
     
   try {
       await mongoose.connect("mongodb://127.0.0.1:27017/peopledb");
       app.listen(3001);
       console.log('Connection');
-      const db = mongoClient.db("peopledb");
-      const collection = db.collection("users");
-      const results = await collection.find().toArray();
-      //console.log(results);
 
   } catch(err) {
       return console.log(err);
@@ -76,11 +67,9 @@ app.post("/api/users/login", async(req, res) => {
 });
 
 app.post("/api/clients/:account_number/updateStatus", async (req, res) => {
-  console.log(req.body);
+  
   const { status } = req.body;
   const account_number = req.params["account_number"];
-
-  console.log(account_number);
 
   try {
     const client = await Client.findOne({ account_number });
@@ -92,8 +81,6 @@ app.post("/api/clients/:account_number/updateStatus", async (req, res) => {
     client.status = status;
 
     await client.save();
-
-    console.log('Статус клиента успешно обновлен:', client);
 
     res.status(200).send(client);
   } catch (error) {

@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import { IClient, Statuses } from '../../types/data';
 
-const ClientsPage: React.FC<{ clients: IClient[] }> = 
-    ({ clients }: { clients: IClient[] }) => {
+import styles from './ClientsPage.module.css';
 
-        const [clientList, setClientList] = useState(clients);
+const ClientsPage: React.FC<{ 
+    clients: IClient[];
+    setClients: (clients: IClient[]) => void;
+    }> = ({ clients, setClients }) => {
 
         const handleSelect = async (status: String, account_number: Number) => {
 
@@ -30,13 +31,13 @@ const ClientsPage: React.FC<{ clients: IClient[] }> =
                 }
               })
               .then(data => {
-                const updatedList = clientList.map(client => {
+                const updatedList = clients.map(client => {
                     if (client.account_number === account_number) {
                         return { ...client, status };
                     }
                     return client;
                 });
-                setClientList(updatedList);
+                setClients(updatedList);
               })
               .catch(error => {
                 console.error('Ошибка:', error.message);
@@ -45,8 +46,8 @@ const ClientsPage: React.FC<{ clients: IClient[] }> =
 
     return (
         <>
-            <h2>Таблица клиентов</h2>
-            <table>
+            <h2 className={styles.title}>Таблица клиентов</h2>
+            <table className={styles.table}>
                 <thead>
                 <tr>
                     <th>Номер счета</th>
@@ -59,30 +60,29 @@ const ClientsPage: React.FC<{ clients: IClient[] }> =
                 </tr>
                 </thead>
                 <tbody>
-                {clientList.map(({ account_number, surname, name, patronymic, date_of_birth, INN, status }) => {
-                return (
-                    <tr key={account_number.toString()}>
-                    <td>{account_number.toString()}</td>
-                    <td>{surname}</td>
-                    <td>{name}</td>
-                    <td>{patronymic}</td>
-                    <td>{date_of_birth}</td>
-                    <td>{INN}</td>
-                    <td>
-                        <select value={status.toString()} onChange={(e) => handleSelect(e.target.value, account_number)} >
-                            {Object.keys(Statuses).map((stat) => {
-                                return (
-                                    <option key={stat} value={stat}>
-                                        {stat}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </td>
-                    </tr>
-                );
+                {clients.map(({ account_number, surname, name, patronymic, date_of_birth, INN, status }) => {
+                    return (
+                        <tr key={account_number.toString()}>
+                            <td>{account_number.toString()}</td>
+                            <td>{surname}</td>
+                            <td>{name}</td>
+                            <td>{patronymic}</td>
+                            <td>{date_of_birth}</td>
+                            <td>{INN}</td>
+                            <td>
+                                <select value={status.toString()} onChange={(e) => handleSelect(e.target.value, account_number)} >
+                                    {Object.keys(Statuses).map((stat) => {
+                                        return (
+                                            <option key={stat} value={stat}>
+                                                {stat}
+                                            </option>
+                                        )
+                                    })}
+                                </select>
+                            </td>
+                        </tr>
+                    );
                 })}
-                
                 </tbody>
             </table>
         </>
