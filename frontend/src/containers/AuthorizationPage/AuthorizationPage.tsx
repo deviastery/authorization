@@ -9,7 +9,6 @@ const AuthorizationPage: React.FC<{ setClients:
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    //const [clients, setClients] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();

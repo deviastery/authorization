@@ -1,7 +1,43 @@
-import { IClient } from '../../types/data';
+import { IClient, Statuses } from '../../types/data';
 
 const ClientsPage: React.FC<{ clients: IClient[] }> = 
     ({ clients }: { clients: IClient[] }) => {
+
+        // const handleSelect = (e: React.FormEvent<HTMLFormElement>) => {
+        //     e.preventDefault();
+        
+        //     const data = {
+        //       login,
+        //       password
+        //     };
+        
+        //     console.log(JSON.stringify(data));
+    
+        //       fetch('http://localhost:3001/api/users/login', {
+        //         method: 'POST',
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(data)
+        //       })
+        //       .then(response => {
+        //         if (response.ok) {
+        //             navigate('/clients');
+        //             return response.json();
+        //           } else {
+        //             return response.json().then(data => { 
+        //                         throw new Error(data.error) 
+        //                     });
+        //         }
+        //       })
+        //       .then(data => {
+        //         setClients(data);
+        //       })
+        //       .catch(error => {
+        //         console.error('Ошибка:', error.message);
+        //         setErrorMessage(error.message);
+        //       });
+        //   };
 
     return (
         <>
@@ -28,7 +64,17 @@ const ClientsPage: React.FC<{ clients: IClient[] }> =
                     <td>{patronymic}</td>
                     <td>{date_of_birth}</td>
                     <td>{INN}</td>
-                    <td>{status}</td>
+                    <td>
+                        <select  value={status.toString()} /* onChange={(e) => setStatus(e.target.value)}*/ >
+                            {Object.keys(Statuses).map((stat) =>{
+                                return (
+                                    <option key={stat} value={stat}>
+                                        {stat}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </td>
                     </tr>
                 );
                 })}
