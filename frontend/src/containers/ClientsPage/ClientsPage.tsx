@@ -11,8 +11,7 @@ const ClientsPage: React.FC<{
 
             const data = {
                 status
-              };
-                       
+              };   
 
               fetch(`http://localhost:3001/api/clients/${account_number}/updateStatus`, {
                 method: 'POST',

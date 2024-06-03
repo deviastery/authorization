@@ -4,10 +4,9 @@ import { IClient } from '../../types/data';
 
 import styles from './AuthorizationPage.module.css';
 
-const AuthorizationPage: React.FC<{ setClients: 
-                        (clients: IClient[]) => void }> = 
-                        ({ setClients }: { setClients: 
-                        (clients: IClient[]) => void }) => {
+const AuthorizationPage: React.FC<{ 
+                          setClients: (clients: IClient[]) => void;
+                          }> = ({ setClients }) => {
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
